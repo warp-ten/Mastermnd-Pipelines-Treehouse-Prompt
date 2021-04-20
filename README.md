@@ -12,35 +12,35 @@ You've been hired by a guy named Ralph. He just made $1,000,000 off of 🐶Dogec
     - [ ]  development
     - [ ]  staging
     - [ ]  production
-- []  Create Monthly budget to keep costs in check
-    - []  $1000 a month
-- []  We'll need some servers to do the main processing and enable voice features. We'll need the following:
-    - []  development
-        - []  1 t2.micro
-        - []  amazon linux
-        - []  tagged appropriately
-        - []  ipaddress output
-    - []  staging:
-        - []  2 t2.micro
-        - []  amazon linux
-        - []  tagged appropriately
-        - []  ipaddress output
-    - []  production:
-        - []  4 t2.micro
-        - []  amazon linux
-        - []  tagged appropriately
-        - []  ipaddress output
+- [ ]  Create Monthly budget to keep costs in check
+    - [ ]  $1000 a month
+- [ ]  We'll need some servers to do the main processing and enable voice features. We'll need the following:
+    - [ ]  development
+        - [ ]  1 t2.micro
+        - [ ]  amazon linux
+        - [ ]  tagged appropriately
+        - [ ]  ipaddress output
+    - [ ]  staging:
+        - [ ]  2 t2.micro
+        - [ ]  amazon linux
+        - [ ]  tagged appropriately
+        - [ ]  ipaddress output
+    - [ ]  production:
+        - [ ]  4 t2.micro
+        - [ ]  amazon linux
+        - [ ]  tagged appropriately
+        - [ ]  ipaddress output
 
-- []  S3 Bucket for static hosting, and for assets
-    - []  dev
-        - []  static
-        - []  assets
-    - []  stage
-        - []  static
-        - []  assets
-    - []  prod
-        - []  static
-        - []  assets
+- [ ]  S3 Bucket for static hosting, and for assets
+    - [ ]  dev
+        - [ ]  static
+        - [ ]  assets
+    - [ ]  stage
+        - [ ]  static
+        - [ ]  assets
+    - [ ]  prod
+        - [ ]  static
+        - [ ]  assets
 - [ ]  Create a DyanmoDB table that is going to save data about rooms with the following attributes
     - [ ]  hash_key → RoomID(snumber)
     - [ ]  range key → RoomTopicTitle(string)
