@@ -1,6 +1,6 @@
-# Terraform + AWS Workshop
+#  Pipelines Journey - Terraform + AWS Workshop https://academy.mastermnd.io/
 
-You've been hired by a guy named Ralph. He just made $1,000,000 off of 🐶Dogecoin and he's ready to finally invest in his idea...which is ClubHouse, but they did it first, so now its called....TREEHOUSE. There currently is no actual app....but he has a team of devs building it now. These devs have planned the app out and have sent over an infrastructure diagram of what they are going to need to ensure this thing runs successfully. Ralph was a project manager in his before Dogecoin went to the moon and he understands the value of automation. Your mission, should you choose to accept it is to deliver a codified infrastructure via terraform that satisfies the following requirements to Ralphs dev team.
+You've been hired by a guy named Ralph. He just made $1,000,000 off of 🐶Dogecoin and he's ready to finally invest in his idea...which is ClubHouse, but they did it first, so now its called....TREEHOUSE. There currently is no actual app....but he has a team of devs building it now. These devs have planned the app out and have sent over an infrastructure diagram of what they are going to need to ensure this thing runs successfully. Ralph was a project manager before Dogecoin went to the moon, and he understands the value of automation. Your mission, should you choose to accept it is to deliver a codified infrastructure via terraform that satisfies the following requirements to Ralphs dev team.
 
 # Time for Liftoff
 
