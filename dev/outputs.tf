@@ -4,7 +4,7 @@ output "publicIP" {
   sensitive = false
 }
 
-output "privateIP" {
-  value     = module.dev_environment.privateIP.*
-  sensitive = false
-}
+# output "privateIP" {
+#   value     = module.dev_environment.privateIP.*
+#   sensitive = false
+# }

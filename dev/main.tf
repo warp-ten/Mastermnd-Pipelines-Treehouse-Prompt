@@ -11,12 +11,16 @@ provider "aws" {
   region = var.dev_region
 }
 
-
+###############################################################
+#### user_data to install nginx is hardcoded in the module ####
+###############################################################
 module "dev_environment" {
-  source   = "../modules/environment"
-  region   = var.dev_region
-  env      = var.env
-  vpc_cidr = var.vpc_cidr
-  instance = var.instance
-  subnet   = var.subnet
+  source      = "../modules/environment"
+  dev_region  = var.dev_region
+  environment = var.environment
+  vpc_cidr    = var.vpc_cidr
+  instance    = var.instance
+  subnet      = var.subnet
+  keyname     = var.keyname
+  bucket_name = var.bucket_name
 }
