@@ -35,8 +35,8 @@ variable "bucket_name" {
   type = map(string)
   description = "each key and value is used to populate bucket creation"
   default = {
-    asset = "dev-assets-treehouse-doge"
-    static = "dev-static-treehouse-doge"
+    asset = "assets-treehouse-doge"
+    static = "static-treehouse-doge"
   }
 }
 
