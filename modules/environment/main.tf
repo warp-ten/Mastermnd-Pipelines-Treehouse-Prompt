@@ -34,13 +34,66 @@ resource "aws_instance" "ec2" {
     "Name" = "${var.environment}-${count.index}"
   }
 }
+#ec2 instances need a profile so they can attach to a role for authentification
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "ec2_profile"
+  role = aws_iam_role.ec2-role.name
+}
+#roles give temporary programatic authentification, instead of hard coded
+resource "aws_iam_role" "ec2-role" {
+  name               = "${var.environment}_ec2_role"
+  assume_role_policy = <<-EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": "sts:AssumeRole",
+            "Principal": {
+              "Service": "ec2.amazonaws.com"
+            },
+            "Effect": "Allow",
+            "Sid": ""
+        }
+    ]
+  }
+  EOF
+  tags = {
+    Name = "${var.environment}-ec2-role"
+  }
+}
+# #policies allow or deny actions from principals to resources
+# resource "aws_iam_role_policy" "s3_all_actions" {
+#   name   = "ec2-role-policy"
+#   role   = aws_iam_role.ec2-role.id
+#   policy = <<-EOF
+#   {
+#     "Version": "2012-10-17",
+#     "Statement": [
+#       {
+#         "Effect": "Allow",
+#         "Action": [
+#           "s3:*"
+#         ],
+#         "Resource": [
+#           "arn:aws:s3:::${lookup(var.bucket_name, "asset")}",
+#           "arn:aws:s3:::${lookup(var.bucket_name, "asset")}/*",
+#           "arn:aws:s3:::${lookup(var.bucket_name, "static")}",
+#           "arn:aws:s3:::${lookup(var.bucket_name, "static")}/*"
+#         ]
+#       }
+#     ]
+#   }
+#   EOF
+# }
 
 resource "aws_s3_bucket" "s3" {
   for_each = var.bucket_name
-  bucket = each.value
+  bucket = "${var.environment}-${each.value}"
   acl    = "private"
+  force_destroy = true
   tags = {
     Name        = each.value
     Environment = var.environment
   }
 }
+
