@@ -21,6 +21,7 @@ resource "aws_instance" "ec2" {
   vpc_security_group_ids = [aws_security_group.sec_group.id]
   subnet_id              = aws_subnet.subnet.id
   key_name               = var.keyname
+  iam_instance_profile   = aws_iam_instance_profile.ec2_profile.id
   # Commands to run at startup
   user_data = <<-EOF
     #!/bin/bash
@@ -36,7 +37,7 @@ resource "aws_instance" "ec2" {
 }
 #ec2 instances need a profile so they can attach to a role for authentification
 resource "aws_iam_instance_profile" "ec2_profile" {
-  name = "ec2_profile"
+  name = "${var.environment}_ec2_profile"
   role = aws_iam_role.ec2-role.name
 }
 #roles give temporary programatic authentification, instead of hard coded
@@ -61,30 +62,34 @@ resource "aws_iam_role" "ec2-role" {
     Name = "${var.environment}-ec2-role"
   }
 }
-# #policies allow or deny actions from principals to resources
-# resource "aws_iam_role_policy" "s3_all_actions" {
-#   name   = "ec2-role-policy"
-#   role   = aws_iam_role.ec2-role.id
-#   policy = <<-EOF
-#   {
-#     "Version": "2012-10-17",
-#     "Statement": [
-#       {
-#         "Effect": "Allow",
-#         "Action": [
-#           "s3:*"
-#         ],
-#         "Resource": [
-#           "arn:aws:s3:::${lookup(var.bucket_name, "asset")}",
-#           "arn:aws:s3:::${lookup(var.bucket_name, "asset")}/*",
-#           "arn:aws:s3:::${lookup(var.bucket_name, "static")}",
-#           "arn:aws:s3:::${lookup(var.bucket_name, "static")}/*"
-#         ]
-#       }
-#     ]
-#   }
-#   EOF
-# }
+
+#policies allow or deny actions from principals to resources
+#EC2 can list buckets in AWS CLI and has all permissions concerning the two associated buckets. 
+resource "aws_iam_role_policy" "s3_allow_all" {
+  for_each = var.bucket_name
+  name   = "${var.environment}-${each.value}-allow-all"
+  role   = aws_iam_role.ec2-role.id
+  policy = <<-EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:ListAllMyBuckets",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::${var.environment}-${each.value}/*",
+                "arn:aws:s3:::${var.environment}-${each.value}"
+            ]
+        }
+    ]
+  }
+  EOF
+} 
 
 resource "aws_s3_bucket" "s3" {
   for_each = var.bucket_name
@@ -96,4 +101,3 @@ resource "aws_s3_bucket" "s3" {
     Environment = var.environment
   }
 }
-
